@@ -1,8 +1,9 @@
 const express = require('express');
 require('dotenv').config();
 const connectDB = require('./config/db');
-
 const TaskRoutes = require('./routes/TaskRoutes');
+const UserRoutes = require('./routes/UserRoutes');
+// const protect = require('./middleware/auth');
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 app.use('/api', TaskRoutes);
+app.use('/user', UserRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

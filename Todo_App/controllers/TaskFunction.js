@@ -2,7 +2,7 @@ const TaskModel = require('../models/schema');
 
 const getTask = async (req, res) => {
   try {
-    const task = await TaskModel.find();
+    const task = await TaskModel.find({ user: req.user.id });
     res.status(200).json(task);
   } catch (error) {
     res.status(404).json(error);
@@ -22,7 +22,13 @@ const getOneTask = async (req, res) => {
 const postTask = async (req, res) => {
   try {
     const { title, describe, time, status } = req.body;
-    const task = new TaskModel({ title, describe, time, status });
+    const task = new TaskModel({
+      title,
+      describe,
+      time,
+      status,
+      user: req.user.id,
+    });
     const result = await task.save();
     res.status(201).json(result);
   } catch (error) {

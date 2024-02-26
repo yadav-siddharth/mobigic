@@ -7,14 +7,15 @@ const {
   deleteAll,
   getOneTask,
 } = require('../controllers/TaskFunction');
+const protect = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/tasks', getTask);
-router.get('/tasks/:id', getOneTask);
-router.post('/tasks', postTask);
-router.patch('/tasks/:id', updateTasks);
-router.delete('/tasks/:id', deleteTasks);
-router.delete('/tasks', deleteAll);
+router.get('/tasks', protect, getTask);
+router.get('/tasks/:id', protect, getOneTask);
+router.post('/tasks', protect, postTask);
+router.patch('/tasks/:id', protect, updateTasks);
+router.delete('/tasks/:id', protect, deleteTasks);
+router.delete('/tasks', protect, deleteAll);
 
 module.exports = router;
